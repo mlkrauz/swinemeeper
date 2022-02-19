@@ -2,10 +2,11 @@
   "name": "swinemeeper-backend",
   "version": "0.1.0",
   "private": true,
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node src/server.js",
     "watch": "nodemon",
-    "seed": "node seeds/seeds.js"
+    "seed": "node src/seeds/seeds.js"
   },
   "dependencies": {
     "apollo-server-express": "^3.6.3",
