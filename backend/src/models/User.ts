@@ -1,30 +1,45 @@
 import { Schema, model } from 'mongoose'
 import bcrypt from 'bcrypt'
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: [/.+@.+\..+/, 'Must match an email address!'],
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-  },
-  games: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Games',
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      trim: true,
     },
-  ],
-});
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [/.+@.+\..+/, 'Must match an email address!'],
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 8,
+    },
+    games: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Game',
+      },
+    ],
+    reactions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Game',
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ]
+  }, 
+  { timestamps: true }
+);
 
 /**
  * Middleware which creates encrypted password prior to save.
