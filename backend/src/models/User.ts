@@ -28,7 +28,7 @@ const userSchema = new Schema(
     reactions: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Game',
+        ref: 'Reaction',
       },
     ],
     friends: [

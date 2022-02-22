@@ -4,11 +4,13 @@ import { Reactions } from '../../../shared/defs'
 const reactionSchema = new Schema({
   reaction: {
     type: String,
-    enum: Reactions
+    enum: Reactions,
+    immutable: true
   },
   reactingToGame: {
     type: Schema.Types.ObjectId,
-    ref: 'Game'
+    ref: 'Game',
+    immutable: true
   },
   reactingUsers: {
     type: Schema.Types.ObjectId,
