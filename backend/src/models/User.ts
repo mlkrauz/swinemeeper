@@ -1,7 +1,24 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 import bcrypt from 'bcrypt'
+import 'dotenv.config'
 
-const userSchema = new Schema(
+/**
+ * A single User.
+ */
+export interface User {
+  _id: Types.ObjectId
+  username: string
+  email: string
+  password: string
+  games: Types.Array<Schema.Types.ObjectId>
+  reactions: Types.Array<Schema.Types.ObjectId>
+  friends: Types.Array<Schema.Types.ObjectId>
+}
+
+/**
+ * Schema for a user document.
+ */
+const userSchema = new Schema<User>(
   {
     username: {
       type: String,
@@ -21,19 +38,19 @@ const userSchema = new Schema(
     },
     games: [
       {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Game',
       },
     ],
     reactions: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'Game',
+        type: Types.ObjectId,
+        ref: 'Reaction',
       },
     ],
     friends: [
       {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'User'
       }
     ]
@@ -46,7 +63,9 @@ const userSchema = new Schema(
  */
  userSchema.pre('save', async function passwordHash(next) {
   if (this.isNew || this.isModified('password')) {
-    const saltRounds = 8;
+    //dotenv variables are always string. Convert to number.
+    const saltRounds: number = Number(process.env.SALTROUNDS); 
+    
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
 
@@ -60,4 +79,7 @@ userSchema.methods.isCorrectPassword = async function (password: string) {
   return bcrypt.compare(password, this.password);
 };
 
-export const User = model('User', userSchema);
+/**
+ * Document model for a User.
+ */
+export const UserModel = model<User>('User', userSchema);
