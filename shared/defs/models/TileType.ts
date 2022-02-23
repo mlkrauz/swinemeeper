@@ -17,3 +17,13 @@ export enum TileType {
   MINE_REVEALED = 12,
   MINE_CLICKED = 13
 }
+
+/**
+ * Valid enum values when a tile contains a mine.
+ */
+export const validWithMines = [9, 10, 12, 13] as const
+
+/**
+ * Valid enum values when a tile does not contain a mine.
+ */
+export const validWithoutMines = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const

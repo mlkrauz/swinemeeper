@@ -1,7 +1,23 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 import bcrypt from 'bcrypt'
 
-const userSchema = new Schema(
+/**
+ * A single User.
+ */
+export interface User {
+  _id: Types.ObjectId
+  username: string
+  email: string
+  password: string
+  games: Types.Array<Schema.Types.ObjectId>
+  reactions: Types.Array<Schema.Types.ObjectId>
+  friends: Types.Array<Schema.Types.ObjectId>
+}
+
+/**
+ * Schema for a user document.
+ */
+const userSchema = new Schema<User>(
   {
     username: {
       type: String,
@@ -21,19 +37,19 @@ const userSchema = new Schema(
     },
     games: [
       {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Game',
       },
     ],
     reactions: [
       {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Reaction',
       },
     ],
     friends: [
       {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'User'
       }
     ]
@@ -60,4 +76,7 @@ userSchema.methods.isCorrectPassword = async function (password: string) {
   return bcrypt.compare(password, this.password);
 };
 
-export const User = model('User', userSchema);
+/**
+ * Document model for a User.
+ */
+export const UserModel = model<User>('User', userSchema);
