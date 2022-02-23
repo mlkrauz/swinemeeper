@@ -49,7 +49,6 @@ const gameSchema = new Schema<Game>(
       type: String,
       required: true,
       enum: BoardSize,
-      default: BoardSize.BEGINNER,
       immutable: true
     },
     rows: [{
@@ -63,7 +62,6 @@ const gameSchema = new Schema<Game>(
     flaggedTiles: numberDefault0,
     reactions: [{
       type: Types.ObjectId,
-      required: true,
       ref: 'Reaction'
     }]
   }, 

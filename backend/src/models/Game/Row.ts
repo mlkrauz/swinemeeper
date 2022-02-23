@@ -31,8 +31,29 @@ rowSchema.pre('save', function(): void {
   if (this.isModified('tiles') | this.isNew()) {
     
     // Get the parent game's board size.
-    const size: BoardSize = this.parent().get('boardSize')
+    const sizeEnumValue: BoardSize = this.parent().get('boardSize')
 
-    // Use this to
+    // Get array length.
+    const size: number = this.tiles.length()
+
+    switch (sizeEnumValue) {
+      case BoardSize.BEGINNER:
+        if (size !== BoardStats.BEGINNER.x) {
+          throw new Error(`Row should have a length of ${BoardStats.BEGINNER.x} to match the board size!`)
+        }
+        break
+      case BoardSize.INTERMEDIATE:
+        if (size !== BoardStats.INTERMEDIATE.x) {
+          throw new Error(`Row should have a length of ${BoardStats.INTERMEDIATE.x} to match the board size!`)
+        }
+        break
+      case BoardSize.EXPERT:
+        if (size !== BoardStats.EXPERT.x) {
+          throw new Error(`Row should have a length of ${BoardStats.EXPERT.x} to match the board size!`)
+        }
+        break
+      default:
+        throw new Error('Unexpected BoardSize value. Did the available board size selection grow?')
+    }
   }
 })
