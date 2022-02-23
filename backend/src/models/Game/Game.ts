@@ -17,6 +17,8 @@ export interface Game {
   uncoveredTiles: number
   flaggedTiles: number
   reactions: Types.Array<Schema.Types.ObjectId>
+  createdAt: Date
+  updatedAt: Date
 }
 
 // Quick and dirty 'dont-repeat-yourself' hack

@@ -1,4 +1,4 @@
-import { Schema, model, Types } from 'mongoose'
+import { Schema, model, Types, Date } from 'mongoose'
 import bcrypt from 'bcrypt'
 import 'dotenv.config'
 
@@ -13,6 +13,8 @@ export interface User {
   games: Types.Array<Schema.Types.ObjectId>
   reactions: Types.Array<Schema.Types.ObjectId>
   friends: Types.Array<Schema.Types.ObjectId>
+  createdAt: Date
+  updatedAt: Date
 }
 
 /**
