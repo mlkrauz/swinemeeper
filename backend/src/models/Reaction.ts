@@ -12,7 +12,7 @@ export interface Reaction {
 }
 
 /**
- * Schema for reaction document
+ * Schema for reaction document.
  */
 const reactionSchema = new Schema<Reaction>(
   {
@@ -37,6 +37,6 @@ const reactionSchema = new Schema<Reaction>(
 )
 
 /**
- * Document model for a Reaction
+ * Document model for a Reaction.
  */
 export const ReactionModel = model<Reaction>('Reaction', reactionSchema)
