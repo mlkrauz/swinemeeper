@@ -1,5 +1,6 @@
 import { Schema, model, Types } from 'mongoose'
 import bcrypt from 'bcrypt'
+import 'dotenv.config'
 
 /**
  * A single User.
@@ -62,7 +63,9 @@ const userSchema = new Schema<User>(
  */
  userSchema.pre('save', async function passwordHash(next) {
   if (this.isNew || this.isModified('password')) {
-    const saltRounds = 8;
+    //dotenv variables are always string. Convert to number.
+    const saltRounds: number = Number(process.env.SALTROUNDS); 
+    
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
 
