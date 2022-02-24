@@ -6,7 +6,7 @@ import 'dotenv.config'
  * A single User.
  */
 export interface User {
-  _id: Types.ObjectId
+  _id: Schema.Types.ObjectId
   username: string
   email: string
   password: string
@@ -15,6 +15,7 @@ export interface User {
   friends: Types.Array<Schema.Types.ObjectId>
   createdAt: Date
   updatedAt: Date
+  isCorrectPassword: (password: string) => boolean
 }
 
 /**

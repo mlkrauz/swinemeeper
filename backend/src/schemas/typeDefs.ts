@@ -157,10 +157,10 @@ export const typeDefs = gql`
 
     # User mutations
     addGameToUser(userId: ID!, gameId: ID!): User!
-    addReactionToUser(userId: ID!, reactionId: ID!): User!
-    removeReactionFromUser(userId: ID!, reactionId: ID!): User!
-    addFriendToUser(userId: ID!, friendId: ID!): User!
-    removeFriendFromUser(userId: ID!, friendId: ID!): User!
+    # addReactionToUser(userId: ID!, reactionId: ID!): User!
+    # removeReactionFromUser(userId: ID!, reactionId: ID!): User!
+    # addFriendToUser(userId: ID!, friendId: ID!): User!
+    # removeFriendFromUser(userId: ID!, friendId: ID!): User!
 
     # Game mutations
     createGame(
@@ -169,15 +169,15 @@ export const typeDefs = gql`
       rows: [Row!]!
     ): Game
     updateGame(
-      id: ID!
+      gameId: ID!
       gameState: GameState,
-      tilesToUpdate: [tileUpdate]
+      tilesToUpdate: [tileUpdate!]
       timeElapsed: Int
       playerMoves: Int
       uncoveredTiles: Int
       flaggedTiles: Int
     ): Game!
-    addReactionToGame(gameId: ID!, reactionId: ID!): Game!
-    removeReactionFromGame(gameId: ID!, reactionId: ID!): Game!
+    # addReactionToGame(gameId: ID!, reactionId: ID!): Game!
+    # removeReactionFromGame(gameId: ID!, reactionId: ID!): Game!
   }
 `
