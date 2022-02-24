@@ -37,18 +37,21 @@ export const tileSchema = new Schema<Tile>(
 tileSchema.pre('save', function(): void {
   if (this.isModified('tileType') | this.isNew()) {
 
+    // Get value of hasMine
+    const hasMine: boolean = this.hasMine
+
     // Callback validator
     const invalidTile = (function(this: any, validTiles: readonly number[]): boolean {
       return validTiles.indexOf(this.tileType) === -1 ? true : false
     }).bind(this)
     
     // Check if tile is invalid
-    const isTileInvalid = this.hasMine 
+    const isTileInvalid = hasMine
     ? invalidTile(validWithMines)
     : invalidTile(validWithoutMines)
 
     if (isTileInvalid) {
-      throw new Error("")
+      throw new Error(`Tile has ${hasMine ? 'a' : 'no'} mine, but its tileType is being set to '${this.tileType}' which is not possible!`)
     } 
   }
 })

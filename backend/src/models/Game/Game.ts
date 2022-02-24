@@ -1,5 +1,5 @@
 import { Schema, model, Types } from 'mongoose'
-import { GameState } from '../../../../shared/defs/models'
+import { GameState, TileType } from '../../../../shared/defs/models'
 import { BoardSize } from '../../../../shared/defs'
 import { Row, rowSchema } from './Row'
 
@@ -17,6 +17,17 @@ export interface Game {
   uncoveredTiles: number
   flaggedTiles: number
   reactions: Types.Array<Schema.Types.ObjectId>
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Interface definition for updating a tile.
+ */
+export interface TileUpdate {
+  rowNum: number
+  tileNum: number
+  tileType: TileType
 }
 
 // Quick and dirty 'dont-repeat-yourself' hack
@@ -47,7 +58,6 @@ const gameSchema = new Schema<Game>(
       type: String,
       required: true,
       enum: BoardSize,
-      default: BoardSize.BEGINNER,
       immutable: true
     },
     rows: [{
@@ -61,7 +71,6 @@ const gameSchema = new Schema<Game>(
     flaggedTiles: numberDefault0,
     reactions: [{
       type: Types.ObjectId,
-      required: true,
       ref: 'Reaction'
     }]
   }, 
