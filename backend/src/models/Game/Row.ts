@@ -1,4 +1,5 @@
-import { Schema, Model, Types } from 'mongoose'
+import mongoose from 'mongoose'
+const { Schema, Model, Types } = mongoose
 import { Tile, tileSchema } from './Tile'
 import { BoardSize, BoardStats } from '../../../../shared/defs'
 
@@ -6,13 +7,13 @@ import { BoardSize, BoardStats } from '../../../../shared/defs'
  * A row of minesweeper Tiles.
  */
 export interface Row {
-  tiles: Types.DocumentArray<Tile>
+  tiles: mongoose.Types.DocumentArray<Tile>
 }
 
 /**
  * Schema for row subdocument.
  */
-export const rowSchema = new Schema<Row, Model<Row>>(
+export const rowSchema = new Schema<Row, mongoose.Model<Row>>(
   {
     tiles: [{
       type: tileSchema,

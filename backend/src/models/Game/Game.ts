@@ -1,4 +1,5 @@
-import { Schema, model, Types } from 'mongoose'
+import mongoose from 'mongoose'
+const { Schema, model, Types } = mongoose
 import { GameState, TileType } from '../../../../shared/defs/models'
 import { BoardSize } from '../../../../shared/defs'
 import { Row, rowSchema } from './Row'
@@ -7,16 +8,16 @@ import { Row, rowSchema } from './Row'
  * A single Game.
  */
 export interface Game {
-  _id: Types.ObjectId
-  player: Schema.Types.ObjectId
+  _id: mongoose.Types.ObjectId
+  player: mongoose.Schema.Types.ObjectId
   gameState: GameState
   boardSize: BoardSize
-  rows: Types.DocumentArray<Row>
+  rows: mongoose.Types.DocumentArray<Row>
   timeElapsed: number
   playerMoves: number
   uncoveredTiles: number
   flaggedTiles: number
-  reactions: Types.Array<Schema.Types.ObjectId>
+  reactions: mongoose.Types.Array<mongoose.Schema.Types.ObjectId>
   createdAt: Date
   updatedAt: Date
 }

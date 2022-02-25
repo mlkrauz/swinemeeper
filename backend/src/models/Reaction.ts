@@ -1,14 +1,15 @@
-import { Schema, model, Types } from 'mongoose'
+import mongoose from 'mongoose'
+const { Schema, model, Types } = mongoose
 import { Reactions } from '../../../shared/defs'
 
 /**
  * A single reaction to a single game.
  */
 export interface Reaction {
-  _id: Types.ObjectId
+  _id: mongoose.Schema.Types.ObjectId
   reaction: Reactions
-  reactingToGame: Schema.Types.ObjectId
-  reactingUsers: Types.Array<Schema.Types.ObjectId>
+  reactingToGame: mongoose.Schema.Types.ObjectId
+  reactingUsers: mongoose.Types.Array<mongoose.Schema.Types.ObjectId>
 }
 
 /**

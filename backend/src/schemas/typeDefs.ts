@@ -125,6 +125,15 @@ export const typeDefs = gql`
     tileType: TileType!
   }
 
+  input inputRow {
+    tiles: [inputTile!]!
+  }
+
+  input inputTile {
+    hasMine: Boolean!
+    tileType: TileType
+  }
+
   # # # # # # # # # # # # # # #
   #   QUERIES
   # # # # # # # # # # # # # # #
@@ -166,7 +175,7 @@ export const typeDefs = gql`
     createGame(
       player: ID!
       boardSize: BoardSize!
-      rows: [Row!]!
+      rows: [inputRow!]!
     ): Game
     updateGame(
       gameId: ID!

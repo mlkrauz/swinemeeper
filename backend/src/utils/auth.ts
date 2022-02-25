@@ -1,4 +1,5 @@
-import { JwtPayload, sign, verify } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+const { sign, verify } = jwt
 import 'dotenv/config';
 import { Request } from "express";
 
@@ -30,7 +31,7 @@ export function authMiddleware(req: Request) {
   }
 
   try {
-    const data: string | JwtPayload = verify(token, secret, { maxAge: expiration });
+    const data: string | jwt.JwtPayload = verify(token, secret, { maxAge: expiration });
     req.body.user = data;
   } catch (err) {
     console.error(err);
