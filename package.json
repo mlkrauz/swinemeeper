@@ -2,8 +2,9 @@
   "name": "swinemeeper",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "node backend/server.js",
+    "start": "node backend/src/server.ts",
     "develop": "concurrently \"cd backend && npm run watch\" \"cd frontend && npm start\"",
     "install": "cd backend && npm i && cd ../frontend && npm i",
     "seed": "cd backend && npm run seed",
@@ -14,6 +15,8 @@
     "@typescript-eslint/parser": "^5.12.0",
     "concurrently": "^7.0.0",
     "eslint": "^8.9.0",
-    "eslint-plugin-react": "^7.28.0"
+    "eslint-plugin-react": "^7.28.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.5.0"
   }
 }

@@ -1,18 +1,19 @@
-import { Schema, model, Types, Date } from 'mongoose'
+import mongoose from 'mongoose'
+const { Schema, model, Types } = mongoose
 import bcrypt from 'bcrypt'
-import 'dotenv.config'
+import 'dotenv/config'
 
 /**
  * A single User.
  */
 export interface User {
-  _id: Schema.Types.ObjectId
+  _id: mongoose.Schema.Types.ObjectId
   username: string
   email: string
   password: string
-  games: Types.Array<Schema.Types.ObjectId>
-  reactions: Types.Array<Schema.Types.ObjectId>
-  friends: Types.Array<Schema.Types.ObjectId>
+  games: mongoose.Types.Array<mongoose.Schema.Types.ObjectId>
+  reactions: mongoose.Types.Array<mongoose.Schema.Types.ObjectId>
+  friends: mongoose.Types.Array<mongoose.Schema.Types.ObjectId>
   createdAt: Date
   updatedAt: Date
   isCorrectPassword: (password: string) => boolean

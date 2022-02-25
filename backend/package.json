@@ -2,11 +2,13 @@
   "name": "swinemeeper-backend",
   "version": "0.1.0",
   "private": true,
-  "main": "src/server.js",
+  "type": "module",
+  "module": "ESNext",
+  "main": "src/server.ts",
   "scripts": {
-    "start": "node src/server.js",
-    "watch": "nodemon",
-    "seed": "node src/seeds/seeds.js"
+    "start": "node src/server.ts",
+    "watch": "nodemon --experimental-specifier-resolution=node --loader ./loader.js src/server.ts",
+    "seed": "node src/seeds/seeds.ts"
   },
   "dependencies": {
     "@graphql-tools/utils": "^8.6.1",
@@ -21,7 +23,9 @@
     "mongoose": "^6.2.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.5.0",
+    "tsconfig-paths": "^3.12.0"
   },
   "compilerOptions": {
     "paths": {
@@ -33,5 +37,18 @@
       "./src",
       "../shared"
     ]
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "ignore": [
+      "*.test.ts"
+    ],
+    "delay": "1",
+    "execMap": {
+      "ts": "ts-node"
+    }
   }
 }
