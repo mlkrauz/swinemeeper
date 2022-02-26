@@ -4,6 +4,36 @@ import { signToken, tokenSignature } from "../utils"
 import { IResolvers } from '@graphql-tools/utils'
 import { GameState } from "../../../shared/defs/models"
 import { HydratedDocument } from 'mongoose'
+import mongoose from "mongoose"
+import { BoardSize, BoardStats } from "../../../shared/defs"
+
+export interface newGameInput {
+  player: mongoose.Schema.Types.ObjectId
+  boardSize: BoardSize
+}
+
+/**
+ * Helper function mineListGenerator returns an array of valid mine indexes, whose length matches
+ * @param {number} numMines is the integer value of the number of mines required.
+ * @param {number} maxTiles is the integer value of the total number of tiles.
+ * @returns {number[]} an array, whose length matches the number of mines and whos values represent the index of a mine.
+ */
+const mineListGenerator = (numMines: number, maxTiles: number) => {
+  var mineList = []
+  
+  // generate mine indexes
+  while (mineList.length < numMines) {
+    // generate new mine location
+    const newMineIndex = Math.round(Math.random() * maxTiles)
+
+    // verify a mine does not exist at that index already. Push the new index if confirmed.
+    if (mineList.indexOf(newMineIndex) === -1) {
+      mineList.push(newMineIndex)
+    }
+  }
+
+  return mineList
+}
 
 /**
  * @param {Any} args - Object containing args.
@@ -171,9 +201,50 @@ export const resolvers: IResolvers = {
       throw new Error('This user already has this game.')
     }
     */
-    createGame: async (parent, args) => {
+    createGame: async (parent, args: newGameInput) => {
+      // Get board stats
+      let numRows: number, numCol: number, numMines: number
+      switch (args.boardSize) {
+        case BoardSize.BEGINNER:
+          numRows = BoardStats.BEGINNER.y
+          numCol = BoardStats.BEGINNER.x
+          numMines = BoardStats.BEGINNER.mines
+          break
+        case BoardSize.INTERMEDIATE:
+          numRows = BoardStats.INTERMEDIATE.y
+          numCol = BoardStats.INTERMEDIATE.x
+          numMines = BoardStats.INTERMEDIATE.mines
+          break
+        case BoardSize.EXPERT:
+          numRows = BoardStats.EXPERT.y
+          numCol = BoardStats.EXPERT.x
+          numMines = BoardStats.EXPERT.mines
+          break
+        default:
+          throw new Error(`Board size not found! Did a new board type get added?`)
+      }
+
+      // Generate grid data.
+      const mineList = mineListGenerator(numMines, numRows * numCol)
+      let rows = []
+      for (let i = 0; i < numRows; i++) {
+        // Create new row
+        let currentRow = { tiles: [] as any }
+        // Create tiles and append to current row
+        for (let j = 0; j < numCol; j++) {
+          const hasMine = () => {
+            // Check if the current index resides in MineList
+            return (mineList.indexOf(i * numCol + j + 1) === -1) ? false : true 
+          }
+          let newTile = { hasMine: hasMine() }
+          currentRow.tiles.push(newTile)
+        }
+        // Push the current row
+        rows.push(currentRow)
+      }
+
       // Create and get Game
-      const game: HydratedDocument<Game> | null = await GameModel.create(args)
+      const game: HydratedDocument<Game> | null = await GameModel.create({ ...args, rows: rows })
 
       return game
     },
