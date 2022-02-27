@@ -13,37 +13,37 @@ export type Theme = {
 
 export const Themes: { [theme: string]: Theme } = {
   LIGHT_NOT_ANIMATED: {
-    id: 'light_not_animated',
+    id: 'LIGHT_NOT_ANIMATED',
     displayName: 'Light - Simple',
     color: ThemeColor.LIGHT,
     displayAnimations: false
   },
   LIGHT_ANIMATED: {
-    id: 'light_animated',
+    id: 'LIGHT_ANIMATED',
     displayName: 'Light - Dynamic',
     color: ThemeColor.LIGHT,
     displayAnimations: true
   },
   DARK_NOT_ANIMATED: {
-    id: 'dark_not_animated',
+    id: 'DARK_NOT_ANIMATED',
     displayName: 'Dark - Simple',
     color: ThemeColor.DARK,
     displayAnimations: false
   },
   DARK_ANIMATED: {
-    id: 'dark_animated',
+    id: 'DARK_ANIMATED',
     displayName: 'Dark - Dynamic',
     color: ThemeColor.DARK,
     displayAnimations: true
   },
   PASTEL_NOT_ANIMATED: {
-    id: 'pastel_not_animated',
+    id: 'PASTEL_NOT_ANIMATED',
     displayName: 'Pastel - Simple',
     color: ThemeColor.PASTEL,
     displayAnimations: false
   },
   PASTEL_ANIMATED: {
-    id: 'pastel_animated',
+    id: 'PASTEL_ANIMATED',
     displayName: 'Pastel - Dynamic',
     color: ThemeColor.PASTEL,
     displayAnimations: true
