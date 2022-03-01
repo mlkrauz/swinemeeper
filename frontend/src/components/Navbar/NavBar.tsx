@@ -1,6 +1,7 @@
 import React from 'react'
 import auth from '../../utils/auth'
 import './NavBar.css'
+import { Link } from 'react-router-dom'
 
 export function Navbar() {
   return (
@@ -25,9 +26,16 @@ export function Navbar() {
           </a>
         </li>
         <li className='header__li'>
-          <a href='/'>
-            <h2 className='header__h2'>LOGIN</h2>
-          </a>
+          { auth.loggedIn() ? (
+              <button onClick={() => auth.logout()}>
+                <h2 className='header__h2'>LOGOUT</h2>
+              </button>
+            ) : (
+              <Link to={'/login'}>
+                <h2 className='header__h2'>LOGIN</h2>
+              </Link>
+            )
+          }
         </li>
       </ul>
       <button className='header__item header__item--right'>OPTIONS</button>
