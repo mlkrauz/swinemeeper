@@ -2,7 +2,7 @@ import { Themes, Theme } from '../../../models/theme'
 import { ReactiveVar } from '@apollo/client'
 import { isEqual } from 'lodash-es'
 
-export const setTheme = (themeVar: ReactiveVar<Theme>) => {
+export const SET_THEME = (themeVar: ReactiveVar<Theme>) => {
   // Check if theme exists in our list of themes.
   const validTheme = (themeToValidate: Theme): boolean => {
     const validIndex: number = Object.values(Themes).findIndex(

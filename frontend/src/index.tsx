@@ -12,6 +12,7 @@ import { BrowserRouter } from 'react-router-dom'
 // Graphql endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
+  credentials: 'include'
 })
 
 // Get auth token for apollo context
