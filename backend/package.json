@@ -6,7 +6,7 @@
   "module": "ESNext",
   "main": "src/server.ts",
   "scripts": {
-    "start": "node src/server.ts",
+    "start": "node --experimental-specifier-resolution=node --loader ./loader.js src/server.ts",
     "watch": "nodemon --experimental-specifier-resolution=node --loader ./loader.js src/server.ts",
     "seed": "node src/seeds/seeds.ts"
   },

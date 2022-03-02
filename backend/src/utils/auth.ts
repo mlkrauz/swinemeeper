@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 const { sign, verify } = jwt
 import 'dotenv/config';
-import { Request } from "express";
 
 // Get secret and define auth expiration duration
 const secret: string = process.env.SECRET as string
@@ -16,9 +15,9 @@ export interface tokenSignature {
   _id: string
 }
 
-export function authMiddleware(req: Request) {
+export function authMiddleware({ req }: any) {
   // Get token from either req.body or query
-  let token: string | undefined = req.body.token || req.query.token || req.headers.authorization as string
+  let token: string | undefined = req.body.token || req.query.token || req.headers.authorization as string || undefined
 
   if (!token) {
     // No auth token found. Return and proceed.
