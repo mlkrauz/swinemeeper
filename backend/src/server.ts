@@ -1,5 +1,5 @@
 import express, { Express } from 'express';
-import { ApolloServer, ExpressContext } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import 'dotenv/config'
 import { db } from './config/connection';
 import { typeDefs, resolvers } from './schemas';
@@ -25,6 +25,9 @@ const server = new ApolloServer({
 await server.start()
 
 server.applyMiddleware({ app })
+
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
 
 // The variable __dirname is not exposed by node when using ES6 module imports.
 // We can recreate __dirname with an empty path.resolve()
