@@ -8,7 +8,7 @@
     "develop": "concurrently \"cd backend && npm run watch\" \"cd frontend && npm start\"",
     "install": "cd backend && npm i && cd ../frontend && npm i",
     "seed": "cd backend && npm run seed",
-    "build": "cd backend && npm run build"
+    "build": "cd frontend && npm run build"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.12.0",
