@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Container } from '../components/Container/Container'
-import { useMutation } from '@apollo/client'
+import { useMutation, MutationTuple } from '@apollo/client'
 import { LOGIN } from '../operations/mutations/LOGIN/LOGIN'
+import { CREATE_USER } from '../operations/mutations/CREATE_USER/CREATE_USER'
+import auth from '../utils/auth'
 
 export const Login: React.FC = () => {
   
@@ -12,13 +14,83 @@ export const Login: React.FC = () => {
     passwordConfirm: string
   }
 
-  const [formState, setFormState] = useState<formData>({ username: '', email: '', password: '', passwordConfirm: '' })
+  const formDefaults: formData = { username: '', email: '', password: '', passwordConfirm: '' }
+
+  const [formState, setFormState] = useState<formData>(formDefaults)
   const [isLoggingIn, toggleLoginState] = useState<boolean>(true)
-  const [login, { error }] = useMutation(LOGIN)
+  const [login, loginError ] = useMutation(LOGIN)
+  const [newUser, newUserError ] = useMutation(CREATE_USER)
+  const [displayedError, setDisplayedError] = useState<string | null>(null)
   
+  const handleFormSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    try {
+      if (isLoggingIn) {
+        // Try logging in.
+        const mutationResponse = await login({
+          variables: { email: formState.email,
+          password: formState.password }
+        })
+
+        // Get token
+        const token: string = mutationResponse.data.login.token
+        const userId: string = mutationResponse.data.login.user._id
+
+        // Log in
+        auth.login(token, userId)
+
+        // Reset form
+        setFormState(formDefaults)
+        setDisplayedError(null)
+
+      } else {
+        // Check if passwords match
+        if (formState.password !== formState.passwordConfirm) {
+          throw new Error('Passwords do not match.')
+        }
+
+        // Create new user. We don't need anything from the response at this time.
+        await newUser({
+          variables: {
+            username: formState.username,
+            email: formState.email,
+            password: formState.password
+          }
+        })
+
+        const loginResponse = await login({
+          variables: { email: formState.email,
+          password: formState.password }
+        })
+
+        // Get token
+        const token: string = loginResponse.data.login.token
+        const userId: string = loginResponse.data.login.user._id
+
+        // Log in
+        auth.login(token, userId)
+
+        // Reset form
+        setFormState(formDefaults)
+        setDisplayedError(null)
+
+      }
+    } catch (error: any) {
+      setDisplayedError(error?.message ?? 'An unknown error occured!')
+    }
+  }
+
+  const formChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setFormState({
+      ...formState,
+      [name]: value
+    } as formData)
+  }
+
   return (
     <Container { ...{ title: isLoggingIn ? 'LOG IN' : 'SIGN UP' } }>
-      <form>
+      <form name='login' onSubmit={handleFormSubmit}>
         { isLoggingIn ? (
           null
         ) : (
@@ -29,6 +101,7 @@ export const Login: React.FC = () => {
               name='username'
               type='text'
               id='username'
+              onChange={formChanged}
             />
           </div>
         ) }
@@ -39,6 +112,7 @@ export const Login: React.FC = () => {
             name='email'
             type='email'
             id='email'
+            onChange={formChanged}
           />
         </div>
         <div>
@@ -48,30 +122,35 @@ export const Login: React.FC = () => {
             name='password'
             type='password'
             id='password'
+            onChange={formChanged}
           />
         </div>
         { isLoggingIn ? (
           null
         ) : (
         <div>
-          <label htmlFor='passwordConfirm'>Password</label>
+          <label htmlFor='passwordConfirm'>Confirm Password</label>
           <input
             placeholder='************'
             name='passwordConfirm'
             type='password'
             id='passwordConfirm'
+            onChange={formChanged}
           />
         </div>
         ) }
-      </form>
+      
+      { displayedError ? (
+        <p>{ displayedError }</p>
+      ) : null }
       { isLoggingIn ? (
         <>
           <div>
-            <input 
+            <button 
               name='login'
               type='submit'
               id='login'
-            >Login</input>
+            >Login</button>
           </div>
           <div>
             <p>
@@ -83,11 +162,11 @@ export const Login: React.FC = () => {
       ) : (
         <>
           <div>
-            <input 
+            <button 
               name='signup'
               type='submit'
               id='signup'
-            >Login</input>
+            >Sign up</button>
           </div>
           <div>
             <p>
@@ -97,6 +176,7 @@ export const Login: React.FC = () => {
           </div>
         </>
       ) }
+      </form>
     </Container>
   )
 }

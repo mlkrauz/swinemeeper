@@ -12,14 +12,14 @@ function App() {
   return (
     <>
       <Navbar />
-      <MainContainer>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/leaderboards' element={<Leaderboards />} />
-          <Route path='/user' element={<User />} />
-          <Route path='/login' element={<Login />} />
-        </Routes>
-      </MainContainer>
+      <Routes>
+        <Route path='/' element={<MainContainer />}>
+          <Route path='' element={<Home />} />
+          <Route path='leaderboards' element={<Leaderboards />} />
+          <Route path='user' element={<User />} />
+          <Route path='login' element={<Login />} />
+        </Route>
+      </Routes>
     </>
   )
 }
