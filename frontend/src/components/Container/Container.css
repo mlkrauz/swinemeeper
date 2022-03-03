@@ -30,3 +30,13 @@
 .container__title--h1 {
   font-size: 2em;
 }
+
+@media screen and (max-width: 64em) {
+  .container--noTitle {
+    padding: 3em 0em;
+  }
+  
+  .container--hasTitle {
+    padding: 0em 0em 3em;
+  }
+}

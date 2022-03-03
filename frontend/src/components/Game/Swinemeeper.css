@@ -1,0 +1,19 @@
+.game__container {
+  background-color: lightcyan;
+  padding: 3em 0em;
+}
+
+.game__grid {
+  background-color: cyan;
+  overflow: hidden; /* Shouldn't be necessary, but just to be safe. */
+  max-width: 896px;
+  font-size: 0; /* Gets rid of space between rows */
+}
+
+.game__container, .game__grid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
