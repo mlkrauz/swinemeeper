@@ -1,9 +1,22 @@
-import React from 'react'
 import auth from '../../utils/auth'
 import './NavBar.css'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 export function Navbar() {
+
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
+
+  useEffect(() => {
+    const checkIfLoggedIn = async () => {
+      const loggedIn2: boolean = await auth.loggedIn()
+
+      setLoggedIn(loggedIn2)
+    }
+
+    checkIfLoggedIn().catch((error) => console.log(error))
+  }, [])
+
   return (
     <header className='header'>
       <h3 className='header__item header__item--left'>
@@ -26,7 +39,7 @@ export function Navbar() {
           </a>
         </li>
         <li className='header__li'>
-          { auth.loggedIn() ? (
+          { loggedIn ? (
               <button onClick={() => auth.logout()}>
                 <h2 className='header__h2'>LOGOUT</h2>
               </button>
