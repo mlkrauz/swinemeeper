@@ -23,19 +23,28 @@ class AuthService {
     return payload
   }
 
-  loggedIn(): boolean {
+  async loggedIn(): Promise<boolean> {
     // Checks if there is a saved token and it's still valid
     const token: string | null = this.getToken()
-    return !!token && !this.isTokenExpired(token)
+
+    const checkIfExpired = await this.isTokenExpired(token)
+
+    return token ? !checkIfExpired : Promise.resolve(false)
   }
 
-  async isTokenExpired(token: string): Promise<boolean> {
+  async isTokenExpired(token: string | null): Promise<boolean> {
     try {
-      const decoded = await jose.jwtVerify(token, getPublicKey)
-      if (decoded?.payload?.exp ? decoded.payload.exp < Date.now() / 1000 : false) {
-        return true
-      } else return false
+      if (token) {
+        const decoded = await this.verify(token)
+        if (decoded?.payload?.exp ? decoded.payload.exp < Date.now() / 1000 : false) {
+          return true
+        } else {
+          return false
+        }
+      }
+      return false
     } catch (err) {
+      console.log(err)
       return false
     }
   }

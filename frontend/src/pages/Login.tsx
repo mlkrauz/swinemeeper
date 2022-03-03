@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container } from '../components/Container/Container'
-import { useMutation, MutationTuple } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { LOGIN } from '../operations/mutations/LOGIN/LOGIN'
 import { CREATE_USER } from '../operations/mutations/CREATE_USER/CREATE_USER'
 import auth from '../utils/auth'

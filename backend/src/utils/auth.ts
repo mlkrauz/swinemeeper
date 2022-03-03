@@ -30,7 +30,7 @@ export function authMiddleware({ req }: any) {
   }
 
   try {
-    const data: string | jwt.JwtPayload = verify(token, secret, { maxAge: expiration });
+    const data: string | jwt.JwtPayload = verify(token, secret, { maxAge: expiration, algorithms: ["RS256"] });
     req.body.user = data;
   } catch (err) {
     console.error(err);
@@ -42,5 +42,5 @@ export function signToken({username, email, _id }: tokenSignature): string {
   // Assign incoming data into a new payload
   const payload: tokenSignature = { username, email, _id }
 
-  return sign({ data: payload }, secret, { expiresIn: expiration })
+  return sign({ data: payload }, secret, { expiresIn: expiration, algorithm: "RS256" })
 }
