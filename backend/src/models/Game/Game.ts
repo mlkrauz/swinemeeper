@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const { Schema, model, Types } = mongoose
-import { GameState, TileType } from '../../../../shared/defs/models'
-import { BoardSize } from '../../../../shared/defs'
+import { GameState, TileType } from '../../../../frontend/src/shared/defs/models'
+import { BoardSize } from '../../../../frontend/src/shared/defs'
 import { Row, rowSchema } from './Row'
 
 /**

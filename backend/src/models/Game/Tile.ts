@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 const { Schema } = mongoose
-import { TileType, validWithMines, validWithoutMines } from '../../../../shared/defs/models'
+import { TileType, validWithMines, validWithoutMines } from '../../../../frontend/src/shared/defs/models'
 
 /**
  * A single minesweeper Tile.
