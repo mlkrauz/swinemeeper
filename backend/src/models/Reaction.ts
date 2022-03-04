@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 const { Schema, model, Types } = mongoose
-import { Reactions } from '../../../shared/defs'
+import { Reactions } from '../../../frontend/src/shared/defs'
 
 /**
  * A single reaction to a single game.

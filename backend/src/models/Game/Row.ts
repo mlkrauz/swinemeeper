@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const { Schema, Model, Types } = mongoose
 import { Tile, tileSchema } from './Tile'
-import { BoardSize, BoardStats } from '../../../../shared/defs'
+import { BoardSize, BoardStats } from '../../../../frontend/src/shared/defs'
 
 /**
  * A row of minesweeper Tiles.

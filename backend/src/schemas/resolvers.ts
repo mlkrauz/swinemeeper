@@ -2,10 +2,10 @@ import { AuthenticationError } from "apollo-server-express"
 import { UserModel, ReactionModel, GameModel, User, Reaction, Game, TileUpdate } from "../models"
 import { signToken, tokenSignature } from "../utils"
 import { IResolvers } from '@graphql-tools/utils'
-import { GameState } from "../../../shared/defs/models"
+import { GameState } from "../../../frontend/src/shared/defs/models"
 import { HydratedDocument } from 'mongoose'
 import mongoose from "mongoose"
-import { BoardSize, BoardStats } from "../../../shared/defs"
+import { BoardSize, BoardStats } from "../../../frontend/src/shared/defs"
 
 export interface newGameInput {
   player: mongoose.Schema.Types.ObjectId
